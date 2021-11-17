@@ -15,12 +15,13 @@ export const loadingSlice = createSlice({
   initialState,
   reducers: {
     onLoading: (state, action) => {
+      console.log("@@@@@来てる？？？");
       state.loading = true;
       state.message = action.payload;
     },
-    offLoading: (state, action) => {
+    offLoading: (state) => {
+      console.log("@@@@@終わり？？？");
       state.loading = false;
-      state.message = action.payload;
     },
   },
 });

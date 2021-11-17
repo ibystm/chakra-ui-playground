@@ -1,22 +1,30 @@
-import React, { useState } from 'react';
-
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import React, { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { offLoading, onLoading } from "../loading/loadingSlice";
+import styles from "./Counter.module.css";
 import {
   decrement,
   increment,
-  incrementByAmount,
   incrementAsync,
+  incrementByAmount,
   incrementIfOdd,
   selectCount,
-} from './counterSlice';
-import styles from './Counter.module.css';
+} from "./counterSlice";
 
 export function Counter() {
   const count = useAppSelector(selectCount);
   const dispatch = useAppDispatch();
-  const [incrementAmount, setIncrementAmount] = useState('2');
+  const [incrementAmount, setIncrementAmount] = useState("2");
 
   const incrementValue = Number(incrementAmount) || 0;
+
+  const incrementWithAsync = () => {
+    dispatch(onLoading(""));
+    dispatch(incrementAsync(incrementValue)).then(() => {
+      dispatch(offLoading());
+    });
+    // dispatch(offLoading());
+  };
 
   return (
     <div>
@@ -50,10 +58,7 @@ export function Counter() {
         >
           Add Amount
         </button>
-        <button
-          className={styles.asyncButton}
-          onClick={() => dispatch(incrementAsync(incrementValue))}
-        >
+        <button className={styles.asyncButton} onClick={incrementWithAsync}>
           Add Async
         </button>
         <button
