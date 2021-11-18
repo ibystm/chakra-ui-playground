@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../../app/store";
-import { fetchCount } from "./counterAPI";
+import { fetchCount, fetchSubstractCount } from "./counterAPI";
 
 export interface CounterState {
   value: number;
@@ -23,6 +23,14 @@ export const incrementAsync = createAsyncThunk(
     const response = await fetchCount(amount);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
+  }
+);
+
+export const substractAsync = createAsyncThunk(
+  "counter/fetchSubstractCount",
+  async (amount: number) => {
+    const res = await fetchSubstractCount(amount);
+    return res.data;
   }
 );
 
@@ -56,6 +64,13 @@ export const counterSlice = createSlice({
       .addCase(incrementAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.value += action.payload;
+      })
+      .addCase(substractAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(substractAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.value -= action.payload;
       });
   },
 });

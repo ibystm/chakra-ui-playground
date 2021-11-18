@@ -5,9 +5,9 @@ import {
   decrement,
   increment,
   incrementAsync,
-  incrementByAmount,
   incrementIfOdd,
   selectCount,
+  substractAsync,
 } from "./counterSlice";
 
 export function Counter() {
@@ -19,6 +19,9 @@ export function Counter() {
 
   const incrementWithAsync = () => {
     dispatch(incrementAsync(incrementValue));
+  };
+  const substractWithAsync = () => {
+    dispatch(substractAsync(incrementValue));
   };
 
   return (
@@ -49,9 +52,9 @@ export function Counter() {
         />
         <button
           className={styles.button}
-          onClick={() => dispatch(incrementByAmount(incrementValue))}
+          onClick={() => dispatch(substractWithAsync)}
         >
-          Add Amount
+          Substract Async
         </button>
         <button className={styles.asyncButton} onClick={incrementWithAsync}>
           Add Async
