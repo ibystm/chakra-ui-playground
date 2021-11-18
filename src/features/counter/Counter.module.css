@@ -43,6 +43,7 @@
   width: 64px;
   text-align: center;
   margin-right: 4px;
+  background-color: inherit;
 }
 
 .button:hover,

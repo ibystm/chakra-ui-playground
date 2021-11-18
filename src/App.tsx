@@ -7,9 +7,18 @@ import { Loading } from "./features/loading/Loading";
 
 function App() {
   const loadingState = useAppSelector(selectLoadingStatus);
+  const loading = loadingState === "loading";
+  function detectClassName(loading: boolean): string {
+    let className = "App";
+    if (loading) {
+      className += " app-loading";
+    }
+    return className;
+  }
   return (
-    <div className="App">
-      {loadingState === "loading" ? <Loading /> : <Counter />}
+    <div className={detectClassName(loading)}>
+      <Counter />
+      {loading && <Loading />}
     </div>
   );
 }
