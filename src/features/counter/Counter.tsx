@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { offLoading, onLoading } from "../loading/loadingSlice";
 import styles from "./Counter.module.css";
 import {
   decrement,
@@ -19,11 +18,7 @@ export function Counter() {
   const incrementValue = Number(incrementAmount) || 0;
 
   const incrementWithAsync = () => {
-    dispatch(onLoading(""));
-    dispatch(incrementAsync(incrementValue)).then(() => {
-      dispatch(offLoading());
-    });
-    // dispatch(offLoading());
+    dispatch(incrementAsync(incrementValue));
   };
 
   return (
