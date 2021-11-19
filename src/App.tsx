@@ -1,12 +1,12 @@
 import React from "react";
 import "./App.css";
-import { useAppSelector } from "./app/hooks";
+import { useSelector } from "./app/hooks";
 import { Counter } from "./features/counter/Counter";
 import { selectLoadingStatus } from "./features/counter/counterSlice";
 import { Loading } from "./features/loading/Loading";
 
 function App() {
-  const loadingState = useAppSelector(selectLoadingStatus);
+  const loadingState = useSelector(selectLoadingStatus);
   const loading = loadingState === "loading";
   function detectClassName(loading: boolean): string {
     let className = "App";
