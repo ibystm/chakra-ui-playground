@@ -1,6 +1,6 @@
+import { Box, Button, Flex, Input } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useAppDispatch, useSelector } from "../../app/hooks";
-import styles from "./Counter.module.css";
 import {
   counterValueSelecter,
   decrement,
@@ -24,38 +24,55 @@ export function Counter() {
   };
 
   return (
-    <div>
-      <div className={styles.row}>
-        <button
-          className={styles.button}
+    <Box>
+      <Flex align="center" justify="center" marginBottom={4}>
+        <Button
+          fontSize={24}
+          color="rgb(112, 76, 182)"
           aria-label="Decrement value"
           onClick={() => dispatch(decrement())}
+          marginLeft={3}
+          marginRight={3}
         >
           -
-        </button>
-        <span className={styles.value}>{count}</span>
-        <button
-          className={styles.button}
+        </Button>
+        <Box as="span">{count}</Box>
+        <Button
+          color="rgb(112, 76, 182)"
+          fontSize={24}
+          // className={styles.button}
           aria-label="Increment value"
           onClick={() => dispatch(increment())}
+          marginLeft={3}
+          marginRight={3}
         >
           +
-        </button>
-      </div>
-      <div className={styles.row}>
-        <input
-          className={styles.textbox}
+        </Button>
+      </Flex>
+      <Flex align="center" justify="center">
+        <Input
+          w={12}
           aria-label="Set increment amount"
           value={incrementAmount}
           onChange={(e) => setIncrementAmount(e.target.value)}
         />
-        <button className={styles.button} onClick={substractWithAsync}>
+        <Button
+          color="rgb(112, 76, 182)"
+          onClick={substractWithAsync}
+          marginLeft={3}
+          marginRight={3}
+        >
           Substract Async
-        </button>
-        <button className={styles.asyncButton} onClick={incrementWithAsync}>
+        </Button>
+        <Button
+          color="rgb(112, 76, 182)"
+          onClick={incrementWithAsync}
+          marginLeft={3}
+          marginRight={3}
+        >
           Add Async
-        </button>
-      </div>
-    </div>
+        </Button>
+      </Flex>
+    </Box>
   );
 }
