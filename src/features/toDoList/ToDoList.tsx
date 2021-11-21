@@ -1,17 +1,19 @@
-import { Checkbox, VStack } from "@chakra-ui/react";
+import { Checkbox, Stack } from "@chakra-ui/react";
 import React from "react";
 
 const ToDoList = () => {
   return (
-    <VStack spacing={10} direction="row">
-      <Checkbox size="lg">Checkbox</Checkbox>
-      <Checkbox size="lg" defaultIsChecked>
+    <Stack spacing={10} direction="column">
+      <Checkbox size="lg" colorScheme="purple" iconSize="2rem">
         Checkbox
       </Checkbox>
-      <Checkbox size="lg" defaultIsChecked>
+      <Checkbox size="lg" colorScheme="purple">
         Checkbox
       </Checkbox>
-    </VStack>
+      <Checkbox size="lg" colorScheme="purple">
+        Checkbox
+      </Checkbox>
+    </Stack>
   );
 };
 
