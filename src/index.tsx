@@ -1,4 +1,8 @@
-import { ChakraProvider } from "@chakra-ui/react";
+import {
+  ChakraProvider,
+  ColorModeScript,
+  theme as defaultTheme,
+} from "@chakra-ui/react";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
@@ -10,7 +14,8 @@ import * as serviceWorker from "./serviceWorker";
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ChakraProvider>
+      <ColorModeScript />
+      <ChakraProvider theme={defaultTheme}>
         <App />
       </ChakraProvider>
     </Provider>

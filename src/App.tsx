@@ -1,9 +1,9 @@
-import { Box } from "@chakra-ui/react";
+import {Box} from "@chakra-ui/react";
 import React from "react";
-import { useSelector } from "./app/hooks";
-import { Counter } from "./features/counter/Counter";
-import { selectLoadingStatus } from "./features/counter/counterSlice";
-import { Loading } from "./features/loading/Loading";
+import {useSelector} from "./app/hooks";
+import {selectLoadingStatus} from "./features/counter/counterSlice";
+import {Loading} from "./features/loading/Loading";
+import ToDoList from './features/toDoList/ToDoList';
 
 function App() {
   const loadingState = useSelector(selectLoadingStatus);
@@ -16,9 +16,9 @@ function App() {
       alignItems="center"
       justifyContent="center"
       position="relative"
-      bg={loading ? "#000" : undefined}
+      bg={loading ? "#E7F3FA" : undefined}
     >
-      <Counter />
+      <ToDoList />
       {loading && <Loading />}
     </Box>
   );

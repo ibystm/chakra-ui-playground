@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Input } from "@chakra-ui/react";
+import { Box, Button, Flex, Input, VStack } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useAppDispatch, useSelector } from "../../app/hooks";
 import {
@@ -22,8 +22,8 @@ export function Counter() {
   };
 
   return (
-    <Box>
-      <Flex align="center" justify="center" marginBottom={4}>
+    <VStack spacing={8}>
+      <Flex align="center" justify="center">
         <Button
           fontSize="32px"
           color="rgb(112, 76, 182)"
@@ -45,7 +45,7 @@ export function Counter() {
           w="80px"
           marginLeft={8}
           marginRight={8}
-          fontSize="32px"
+          fontSize="3xl"
           // className={styles.button}
           aria-label="Increment value"
           onClick={() => dispatch(increment())}
@@ -86,6 +86,6 @@ export function Counter() {
           Add Async
         </Button>
       </Flex>
-    </Box>
+    </VStack>
   );
 }
