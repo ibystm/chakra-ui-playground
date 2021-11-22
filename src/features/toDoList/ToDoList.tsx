@@ -3,8 +3,14 @@ import React from "react";
 
 const ToDoList = () => {
   return (
-    <Stack spacing={10} direction="column">
-      <Checkbox size="lg" colorScheme="purple" iconSize="2rem">
+    <Stack
+      spacing={10}
+      direction="column"
+      align="start"
+      justify="center"
+      w="300px"
+    >
+      <Checkbox size="lg" colorScheme="purple">
         Checkbox
       </Checkbox>
       <Checkbox size="lg" colorScheme="purple">
