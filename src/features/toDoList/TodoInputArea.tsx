@@ -10,7 +10,8 @@ const TodoInputArea = () => {
     (e: React.KeyboardEvent): void => {
       if (!input.length) return;
 
-      if (e.key === "Enter") {
+      // deprecated
+      if (e.keyCode === 13) {
         console.log("inputは！", input);
         dispatch(addTodo(input));
         setInput("");

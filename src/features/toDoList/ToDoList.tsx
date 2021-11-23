@@ -13,8 +13,8 @@ const ToDoList = () => {
       justify="center"
       w="300px"
     >
-      {todoList.map((t) => (
-        <Checkbox size="lg" colorScheme="purple" checked={t.isDone}>
+      {todoList.map((t, idx) => (
+        <Checkbox key={idx} size="lg" colorScheme="purple" checked={t.isDone}>
           {t.todo}
         </Checkbox>
       ))}
