@@ -1,7 +1,10 @@
 import { Checkbox, Stack } from "@chakra-ui/react";
 import React from "react";
+import { useSelector } from "../../app/hooks";
+import { selectTodoList } from "./toDoListSlice";
 
 const ToDoList = () => {
+  const todoList = useSelector((state) => selectTodoList(state));
   return (
     <Stack
       spacing={10}
@@ -10,15 +13,11 @@ const ToDoList = () => {
       justify="center"
       w="300px"
     >
-      <Checkbox size="lg" colorScheme="purple">
-        Checkbox
-      </Checkbox>
-      <Checkbox size="lg" colorScheme="purple">
-        Checkbox
-      </Checkbox>
-      <Checkbox size="lg" colorScheme="purple">
-        Checkbox
-      </Checkbox>
+      {todoList.map((t) => (
+        <Checkbox size="lg" colorScheme="purple" checked={t.isDone}>
+          {t.todo}
+        </Checkbox>
+      ))}
     </Stack>
   );
 };
