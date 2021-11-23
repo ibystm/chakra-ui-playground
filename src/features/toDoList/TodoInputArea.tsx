@@ -8,6 +8,8 @@ const TodoInputArea = () => {
   const dispatch = useDispatch();
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent): void => {
+      if (!input.length) return;
+
       if (e.key === "Enter") {
         console.log("inputは！", input);
         dispatch(addTodo(input));
@@ -27,6 +29,7 @@ const TodoInputArea = () => {
         size="lg"
         focusBorderColor="purple.400"
         onKeyDown={onKeyDown}
+        value={input}
         onChange={handleChange}
       />
     </Box>

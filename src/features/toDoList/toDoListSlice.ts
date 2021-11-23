@@ -19,7 +19,6 @@ export const todoListSlice = createSlice({
         todo: action.payload,
         isDone: false,
       };
-      console.log(newValue);
       state.push(newValue);
     },
   },
