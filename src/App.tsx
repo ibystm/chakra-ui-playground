@@ -17,7 +17,7 @@ function App() {
       position="relative"
       bg={loading ? "#E7F3FA" : undefined}
     >
-      <Heading>Todo list of the day.</Heading>
+      <Heading>List up of the Chakra UI pros !!</Heading>
       <TodoInputArea />
       <ToDoList />
       {loading && <Loading />}
