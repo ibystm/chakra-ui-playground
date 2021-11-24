@@ -1,10 +1,13 @@
-import { Box, Input } from "@chakra-ui/react";
+import { Box, Input, Text } from "@chakra-ui/react";
 import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useInputError } from "./hooks/useInputError";
 import { addTodo } from "./toDoListSlice";
 
 const TodoInputArea = () => {
   const [input, setInput] = useState<string>("");
+
+  const { errorObject, handleError } = useInputError();
   const dispatch = useDispatch();
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent): void => {
@@ -19,9 +22,14 @@ const TodoInputArea = () => {
     },
     [dispatch, input]
   );
-  const handleChange = useCallback((e: React.FormEvent<HTMLInputElement>) => {
-    setInput(e.currentTarget.value);
-  }, []);
+  const handleChange = useCallback(
+    (e: React.FormEvent<HTMLInputElement>) => {
+      setInput(e.currentTarget.value);
+      handleError(e.currentTarget.value);
+    },
+    [handleError]
+  );
+
   return (
     <Box w="300px">
       <Input
@@ -32,7 +40,13 @@ const TodoInputArea = () => {
         onKeyDown={onKeyDown}
         value={input}
         onChange={handleChange}
+        isInvalid={errorObject.error}
       />
+      {errorObject.message && (
+        <Text color="crimson" mt={4}>
+          {errorObject.message}
+        </Text>
+      )}
     </Box>
   );
 };
