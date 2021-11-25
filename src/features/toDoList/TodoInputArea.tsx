@@ -6,7 +6,6 @@ import { addTodo } from "./toDoListSlice";
 
 const TodoInputArea = () => {
   const [input, setInput] = useState<string>("");
-
   const { errorObject, handleError } = useInputError();
   const dispatch = useDispatch();
   const onKeyDown = useCallback(
@@ -15,7 +14,6 @@ const TodoInputArea = () => {
 
       // deprecated
       if (e.keyCode === 13) {
-        console.log("inputは！", input);
         dispatch(addTodo(input));
         setInput("");
       }
