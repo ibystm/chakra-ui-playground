@@ -4,16 +4,16 @@ type ErrorObject = {
   error: boolean;
   message: string;
 };
-// type UseInputErrorReturn = {
-//   errorObject: ErrorObject;
-//   handleError: (parm: string) => void;
-// };
+type UseInputErrorReturn = {
+  errorObject: ErrorObject;
+  handleError: (parm: string) => void;
+};
 
 const initialErrorInfo = {
   error: false,
   message: "",
 };
-export const useInputError = () => {
+export const useInputError = (): UseInputErrorReturn => {
   const [errorObject, setErrorObject] = useState(initialErrorInfo);
   const handleError = useCallback((input: string) => {
     if (!input.length) {

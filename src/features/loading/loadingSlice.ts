@@ -28,4 +28,4 @@ export const { onLoading, offLoading } = loadingSlice.actions;
 
 export default loadingSlice.reducer;
 
-export const selectLoading = (state: RootState) => state.loading;
+export const selectLoading = (state: RootState): LoadingState => state.loading;

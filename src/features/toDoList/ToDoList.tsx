@@ -3,7 +3,7 @@ import React from "react";
 import { useSelector } from "../../app/hooks";
 import { selectTodoList } from "./toDoListSlice";
 
-const ToDoList = () => {
+const ToDoList: React.FC = () => {
   const todoList = useSelector((state) => selectTodoList(state));
   return (
     <Stack

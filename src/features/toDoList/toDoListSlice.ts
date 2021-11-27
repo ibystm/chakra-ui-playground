@@ -1,5 +1,6 @@
 import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
+
 export type ToDoListState = {
   key: string;
   todo: string;
@@ -25,6 +26,7 @@ export const todoListSlice = createSlice({
 });
 
 export const { addTodo } = todoListSlice.actions;
-export const selectTodoList = (state: RootState) => state.todoList;
+export const selectTodoList = (state: RootState): ToDoListState[] =>
+  state.todoList;
 
 export default todoListSlice.reducer;

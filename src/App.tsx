@@ -6,7 +6,7 @@ import { Loading } from "./features/loading/Loading";
 import TodoInputArea from "./features/toDoList/TodoInputArea";
 import ToDoList from "./features/toDoList/ToDoList";
 
-function App() {
+const App: React.FC = () => {
   const loadingState = useSelector(selectLoadingStatus);
   const loading = loadingState === "loading";
   return (
@@ -23,6 +23,6 @@ function App() {
       {loading && <Loading />}
     </VStack>
   );
-}
+};
 
 export default App;
