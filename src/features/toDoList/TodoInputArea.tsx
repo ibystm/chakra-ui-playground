@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useInputError } from "./hooks/useInputError";
 import { addTodo } from "./toDoListSlice";
 
-const TodoInputArea = () => {
+const TodoInputArea: React.FC = () => {
   const [input, setInput] = useState<string>("");
   const { errorObject, handleError } = useInputError();
   const dispatch = useDispatch();

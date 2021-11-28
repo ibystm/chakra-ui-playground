@@ -1,7 +1,8 @@
+import React from "react";
 import Loader from "react-loader-spinner";
 import style from "./Loading.module.css";
 
-export function Loading() {
+export const Loading: React.FC = () => {
   return (
     <div className={style.wrapper}>
       <Loader
@@ -13,4 +14,4 @@ export function Loading() {
       />
     </div>
   );
-}
+};
