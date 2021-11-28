@@ -20,5 +20,6 @@ module.exports = {
   plugins: ["react", "@typescript-eslint"],
   rules: {
     "no-control-regex": 0,
+    "react/prop-types": "off",
   },
 };
