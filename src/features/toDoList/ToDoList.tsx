@@ -1,7 +1,8 @@
-import { Checkbox, Stack } from "@chakra-ui/react";
+import {Stack} from "@chakra-ui/react";
 import React from "react";
-import { useSelector } from "../../app/hooks";
-import { selectTodoList } from "./toDoListSlice";
+import {useSelector} from "../../app/hooks";
+import TodoItem from "./TodoItem";
+import {selectTodoList} from "./toDoListSlice";
 
 const ToDoList: React.FC = () => {
   const todoList = useSelector((state) => selectTodoList(state));
@@ -13,11 +14,16 @@ const ToDoList: React.FC = () => {
       justify="center"
       w="300px"
     >
-      {todoList.map((t, idx) => (
-        <Checkbox key={idx} size="lg" colorScheme="purple" checked={t.isDone}>
-          {t.todo}
-        </Checkbox>
-      ))}
+      {todoList.map((t) => {
+        return (
+          <TodoItem
+            key={t.key}
+            storeKey={t.key}
+            todo={t.todo}
+            isDone={t.isDone}
+          />
+        );
+      })}
     </Stack>
   );
 };

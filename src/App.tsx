@@ -17,7 +17,7 @@ const App: React.FC = () => {
       position="relative"
       bg={loading ? "#E7F3FA" : undefined}
     >
-      <Heading>List up of the Chakra UI pros !!</Heading>
+      <Heading>Todo Application</Heading>
       <TodoInputArea />
       <ToDoList />
       {loading && <Loading />}
