@@ -1,6 +1,7 @@
-import { Box, Input, Text } from "@chakra-ui/react";
+import { Input, Text } from "@chakra-ui/react";
 import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
+import { MotionBox } from "../../components/Motions";
 import { useInputError } from "./hooks/useInputError";
 import { addTodo } from "./toDoListSlice";
 
@@ -30,7 +31,12 @@ const TodoInputArea: React.FC = () => {
   );
 
   return (
-    <Box w="300px">
+    <MotionBox
+      w="300px"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: "2" }}
+    >
       <Input
         variant="flushed"
         placeholder="New Todo"
@@ -46,7 +52,7 @@ const TodoInputArea: React.FC = () => {
           {errorObject.message}
         </Text>
       )}
-    </Box>
+    </MotionBox>
   );
 };
 
