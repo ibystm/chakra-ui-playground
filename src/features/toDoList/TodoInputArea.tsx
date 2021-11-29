@@ -7,6 +7,7 @@ import { addTodo } from "./toDoListSlice";
 const TodoInputArea: React.FC = () => {
   const [input, setInput] = useState<string>("");
   const { errorObject, handleError } = useInputError();
+
   const dispatch = useDispatch();
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent): void => {
