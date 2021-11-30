@@ -1,7 +1,12 @@
+import { EditIcon } from "@chakra-ui/icons";
 import { useAnimation } from "framer-motion";
 import React, { useCallback, useEffect } from "react";
 import { useAppDispatch } from "../../app/hooks";
-import { MotionBox, MotionCheckbox } from "../../components/Motions";
+import {
+  MotionBox,
+  MotionButton,
+  MotionCheckbox,
+} from "../../components/Motions";
 import { changeStatus } from "./toDoListSlice";
 
 type ITodoItem = {
@@ -49,7 +54,9 @@ const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
       variants={variants}
       initial="initial"
       animate={controls}
-      whileHover={{ scale: 1.2 }}
+      display="flex"
+      justifyContent="space-between"
+      w="100%"
     >
       <MotionCheckbox
         size="lg"
@@ -59,6 +66,9 @@ const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
       >
         {todo}
       </MotionCheckbox>
+      <MotionButton size="lg" bg="none" whileHover={{ scale: 1.2 }}>
+        <EditIcon />
+      </MotionButton>
     </MotionBox>
   );
 };
