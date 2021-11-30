@@ -1,6 +1,17 @@
 import { EditIcon } from "@chakra-ui/icons";
+import {
+  Button,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+} from "@chakra-ui/react";
 import { useAnimation } from "framer-motion";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import {
   MotionBox,
@@ -36,12 +47,13 @@ const variants = {
 const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
   const dispatch = useAppDispatch();
   const controls = useAnimation();
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const closeModal = () => setModalOpen(false);
   const onCheck = useCallback(() => {
     dispatch(changeStatus({ key: storeKey }));
   }, []);
 
   useEffect(() => {
-    console.log("isDone", isDone);
     if (isDone) {
       controls.start("fade");
     }
@@ -50,26 +62,55 @@ const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
     }
   }, [isDone]);
   return (
-    <MotionBox
-      variants={variants}
-      initial="initial"
-      animate={controls}
-      display="flex"
-      justifyContent="space-between"
-      w="100%"
-    >
-      <MotionCheckbox
-        size="lg"
-        colorScheme="purple"
-        isChecked={isDone}
-        onChange={onCheck}
+    <>
+      <MotionBox
+        variants={variants}
+        initial="initial"
+        animate={controls}
+        display="flex"
+        justifyContent="space-between"
+        w="100%"
       >
-        {todo}
-      </MotionCheckbox>
-      <MotionButton size="lg" bg="none" whileHover={{ scale: 1.2 }}>
-        <EditIcon />
-      </MotionButton>
-    </MotionBox>
+        <MotionCheckbox
+          size="lg"
+          colorScheme="purple"
+          isChecked={isDone}
+          onChange={onCheck}
+        >
+          {todo}
+        </MotionCheckbox>
+        <MotionButton
+          size="lg"
+          bg="none"
+          whileHover={{ scale: 1.2 }}
+          onClick={() => {
+            setModalOpen(true);
+          }}
+        >
+          <EditIcon />
+        </MotionButton>
+      </MotionBox>
+      <Modal
+        closeOnOverlayClick={false}
+        isOpen={modalOpen}
+        onClose={closeModal}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Edit your Todo</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <Input defaultValue={todo} />
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3}>
+              Save
+            </Button>
+            <Button onClick={closeModal}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 
