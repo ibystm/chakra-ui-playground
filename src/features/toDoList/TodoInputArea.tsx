@@ -5,6 +5,18 @@ import { MotionBox } from "../../components/Motions";
 import { useInputError } from "./hooks/useInputError";
 import { addTodo } from "./toDoListSlice";
 
+const variants = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: "1",
+    },
+  },
+};
+
 const TodoInputArea: React.FC = () => {
   const [input, setInput] = useState<string>("");
   const { errorObject, handleError } = useInputError();
@@ -31,12 +43,7 @@ const TodoInputArea: React.FC = () => {
   );
 
   return (
-    <MotionBox
-      w="300px"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: "2" }}
-    >
+    <MotionBox w="300px" variants={variants} initial="hidden" animate="visible">
       <Input
         variant="flushed"
         placeholder="New Todo"
