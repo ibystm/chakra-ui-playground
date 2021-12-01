@@ -18,8 +18,7 @@ import {
   MotionButton,
   MotionCheckbox,
 } from "../../components/Motions";
-import { changeStatus } from "./toDoListSlice";
-
+import { changeStatus, updateTodo } from "./toDoListSlice";
 type ITodoItem = {
   storeKey: string;
   todo: string;
@@ -48,9 +47,19 @@ const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
   const dispatch = useAppDispatch();
   const controls = useAnimation();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [editTodo, setEditTodo] = useState<string>(todo);
+
+  console.log("#############3", editTodo);
   const closeModal = () => setModalOpen(false);
   const onCheck = useCallback(() => {
     dispatch(changeStatus({ key: storeKey }));
+  }, []);
+  const onChangeTodo = useCallback((e: React.FormEvent<HTMLInputElement>) => {
+    setEditTodo(e.currentTarget.value);
+  }, []);
+  const onSaveEditTodo = useCallback(() => {
+    dispatch(updateTodo({ key: storeKey, todo: editTodo }));
+    closeModal();
   }, []);
 
   useEffect(() => {
@@ -100,10 +109,10 @@ const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
           <ModalHeader>Edit your Todo</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <Input defaultValue={todo} />
+            <Input value={editTodo} onChange={onChangeTodo} />
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3}>
+            <Button colorScheme="blue" mr={3} onClick={onSaveEditTodo}>
               Save
             </Button>
             <Button onClick={closeModal}>Cancel</Button>
