@@ -58,9 +58,10 @@ const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
     setEditTodo(e.currentTarget.value);
   }, []);
   const onSaveEditTodo = useCallback(() => {
+    console.log("こっちは？", editTodo);
     dispatch(updateTodo({ key: storeKey, todo: editTodo }));
     closeModal();
-  }, []);
+  }, [editTodo]);
 
   useEffect(() => {
     if (isDone) {
