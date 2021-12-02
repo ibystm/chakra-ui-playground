@@ -48,8 +48,6 @@ const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
   const controls = useAnimation();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [editTodo, setEditTodo] = useState<string>(todo);
-
-  console.log("#############3", editTodo);
   const closeModal = () => setModalOpen(false);
   const onCheck = useCallback(() => {
     dispatch(changeStatus({ key: storeKey }));
@@ -58,8 +56,8 @@ const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
     setEditTodo(e.currentTarget.value);
   }, []);
   const onSaveEditTodo = useCallback(() => {
-    console.log("こっちは？", editTodo);
     dispatch(updateTodo({ key: storeKey, todo: editTodo }));
+    setEditTodo("");
     closeModal();
   }, [editTodo]);
 

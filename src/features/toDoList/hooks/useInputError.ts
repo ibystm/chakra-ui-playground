@@ -16,7 +16,6 @@ const initialErrorInfo = {
 export const useInputError = (): UseInputErrorReturn => {
   const [errorObject, setErrorObject] = useState(initialErrorInfo);
   const handleError = useCallback((input: string) => {
-    console.log(input.length);
     if (input.length === 0) {
       setErrorObject({
         error: true,

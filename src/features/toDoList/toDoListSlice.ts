@@ -27,9 +27,8 @@ export const todoListSlice = createSlice({
       action: PayloadAction<Omit<ToDoListState, "isDone">>
     ) => {
       const { key, todo } = action.payload;
-      console.log("結果", todo);
-      const index = state.findIndex((e) => e.key === action.payload.key);
-      state[index].todo = action.payload.todo;
+      const index = state.findIndex((e) => e.key === key);
+      state[index].todo = todo;
     },
     changeStatus: (
       state,
