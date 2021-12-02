@@ -1,5 +1,6 @@
-import { EditIcon } from "@chakra-ui/icons";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import {
+  Box,
   Button,
   Input,
   Modal,
@@ -87,16 +88,28 @@ const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
         >
           {todo}
         </MotionCheckbox>
-        <MotionButton
-          size="lg"
-          bg="none"
-          whileHover={{ scale: 1.2 }}
-          onClick={() => {
-            setModalOpen(true);
-          }}
-        >
-          <EditIcon />
-        </MotionButton>
+        <Box>
+          <MotionButton
+            size="lg"
+            bg="none"
+            whileHover={{ scale: 1.2 }}
+            onClick={() => {
+              setModalOpen(true);
+            }}
+          >
+            <EditIcon />
+          </MotionButton>
+          <MotionButton
+            size="lg"
+            bg="none"
+            whileHover={{ scale: 1.2 }}
+            onClick={() => {
+              setModalOpen(true);
+            }}
+          >
+            <DeleteIcon />
+          </MotionButton>
+        </Box>
       </MotionBox>
       <Modal
         closeOnOverlayClick={false}
