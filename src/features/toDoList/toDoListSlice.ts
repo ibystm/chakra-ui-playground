@@ -1,4 +1,4 @@
-import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, current, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
 export type ToDoListState = {
@@ -8,13 +8,13 @@ export type ToDoListState = {
   // finishedAt: number
 };
 
-const initialState: ToDoListState[] = [];
-
 export const todoListSlice = createSlice({
   name: "todoList",
-  initialState,
+  initialState: [] as ToDoListState[],
   reducers: {
     addTodo: (state, action: PayloadAction<string>) => {
+      // currentを使えば、現在のstateを除くことが可能。なければ、logged instance proxy objの形で出力されてします。
+      console.log(current(state));
       const newValue: ToDoListState = {
         key: nanoid(),
         todo: action.payload,
