@@ -19,7 +19,7 @@ import {
   MotionButton,
   MotionCheckbox,
 } from "../../components/Motions";
-import { changeStatus, updateTodo } from "./toDoListSlice";
+import { changeStatus, deleteTodo, updateTodo } from "./toDoListSlice";
 type ITodoItem = {
   storeKey: string;
   todo: string;
@@ -61,6 +61,9 @@ const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
     setEditTodo("");
     closeModal();
   }, [editTodo]);
+  const onDeleteTodo = useCallback(() => {
+    dispatch(deleteTodo({ key: storeKey }));
+  }, []);
 
   useEffect(() => {
     if (isDone) {
@@ -103,9 +106,7 @@ const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
             size="lg"
             bg="none"
             whileHover={{ scale: 1.2 }}
-            onClick={() => {
-              setModalOpen(true);
-            }}
+            onClick={onDeleteTodo}
           >
             <DeleteIcon />
           </MotionButton>
