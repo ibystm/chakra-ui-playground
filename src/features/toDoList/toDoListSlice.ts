@@ -28,6 +28,9 @@ export const todoListSlice = createSlice({
     ) => {
       const { key, todo } = action.payload;
       const index = state.findIndex((e) => e.key === key);
+      if (!state[index]) {
+        return;
+      }
       state[index].todo = todo;
     },
     deleteTodo: (state, action: PayloadAction<Pick<ToDoListState, "key">>) => {

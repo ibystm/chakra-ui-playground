@@ -1,4 +1,5 @@
-import { Input, Text } from "@chakra-ui/react";
+import { RepeatIcon } from "@chakra-ui/icons";
+import { Box, Button, Input, Text } from "@chakra-ui/react";
 import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { MotionBox } from "../../components/Motions";
@@ -42,23 +43,39 @@ const TodoInputArea: React.FC = () => {
     [handleError]
   );
 
+  const onClickReset = useCallback(() => {
+    alert("こらー！");
+  }, []);
+
   return (
-    <MotionBox w="300px" variants={variants} initial="hidden" animate="visible">
-      <Input
-        variant="flushed"
-        placeholder="New Todo"
-        size="lg"
-        focusBorderColor="purple.400"
-        onKeyDown={onKeyDown}
-        value={input}
-        onChange={handleChange}
-        isInvalid={errorObject.error}
-      />
-      {errorObject.message && (
-        <Text color="crimson" mt={4}>
-          {errorObject.message}
-        </Text>
-      )}
+    <MotionBox
+      w="320px"
+      variants={variants}
+      initial="hidden"
+      animate="visible"
+      display="flex"
+      justifyContent="space-between"
+    >
+      <Box width="75%">
+        <Input
+          variant="flushed"
+          placeholder="New Todo"
+          size="lg"
+          focusBorderColor="purple.400"
+          onKeyDown={onKeyDown}
+          value={input}
+          onChange={handleChange}
+          isInvalid={errorObject.error}
+        />
+        {errorObject.message && (
+          <Text color="crimson" mt={4}>
+            {errorObject.message}
+          </Text>
+        )}
+      </Box>
+      <Button bg="none" onClick={onClickReset}>
+        <RepeatIcon />
+      </Button>
     </MotionBox>
   );
 };
