@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  app:
+    build:
+      context: .
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
+    image: app:redux-asobi
+    container_name: redux-asobi-container
+    command: npm start
