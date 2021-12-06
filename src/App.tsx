@@ -17,7 +17,7 @@ const App: React.FC = () => {
       position="relative"
       bg={loading ? "#E7F3FA" : undefined}
     >
-      <Heading>Todo Application</Heading>
+      <Heading>Todo App</Heading>
       <TodoInputArea />
       <ToDoList />
       {loading && <Loading />}

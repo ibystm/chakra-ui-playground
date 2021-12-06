@@ -1,12 +1,11 @@
 version: "3.8"
 services:
-  app:
+  node:
     build:
-      context: .
+      context: . # specify the Dir which Dockerfile is going to build
     volumes:
       - .:/app
     ports:
       - 3000:3000
-    image: app:redux-asobi
-    container_name: redux-asobi-container
-    command: npm start
+    container_name: asobi-ct
+    command: npm start # command when container spins up
