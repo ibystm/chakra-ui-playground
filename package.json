@@ -48,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "@types/testing-library__dom": "^7.5.0",
     "eslint-plugin-jest": "^24.1.5"
   }
 }
