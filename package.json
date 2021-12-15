@@ -8,7 +8,6 @@
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
     "@reduxjs/toolkit": "^1.5.1",
-    "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "@types/jest": "^24.0.0",
@@ -48,6 +47,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.1",
     "@types/testing-library__dom": "^7.5.0",
     "eslint-plugin-jest": "^24.1.5"
   }
