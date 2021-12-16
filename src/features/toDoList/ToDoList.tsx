@@ -1,7 +1,7 @@
 import { Stack } from "@chakra-ui/react";
 import React from "react";
 import { useSelector } from "../../app/hooks";
-import TodoItem from "./TodoItem";
+import { TodoItem } from "./TodoItem";
 import { selectTodoList } from "./toDoListSlice";
 
 const ToDoList: React.FC = () => {

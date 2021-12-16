@@ -42,6 +42,9 @@ export const todoListSlice = createSlice({
       action: PayloadAction<Pick<ToDoListState, "key">>
     ) => {
       const index = state.findIndex((e) => e.key === action.payload.key);
+      if (!state[index]) {
+        return;
+      }
       state[index].isDone = !state[index].isDone;
     },
   },

@@ -44,7 +44,7 @@ const variants = {
   },
 };
 
-const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
+export const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
   const dispatch = useAppDispatch();
   const controls = useAnimation();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -135,5 +135,3 @@ const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
     </>
   );
 };
-
-export default TodoItem;
