@@ -83,19 +83,28 @@ export const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
         justifyContent="space-between"
         w="100%"
       >
-        <MotionCheckbox
-          size="lg"
-          colorScheme="purple"
-          isChecked={isDone}
-          onChange={onCheck}
+        <Box
+          whiteSpace="nowrap"
+          textOverflow="ellipsis"
+          width="200px"
+          overflow="hidden"
+          display="inline-block"
         >
-          {todo}
-        </MotionCheckbox>
-        <Box>
+          <MotionCheckbox
+            size="lg"
+            colorScheme="purple"
+            isChecked={isDone}
+            onChange={onCheck}
+          >
+            {todo}
+          </MotionCheckbox>
+        </Box>
+
+        <Box w="30%" display="flex">
           <MotionButton
             size="lg"
             bg="none"
-            whileHover={{ scale: 1.2 }}
+            whileHover={{ scale: 1.1 }}
             onClick={() => {
               setModalOpen(true);
             }}
@@ -105,7 +114,7 @@ export const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
           <MotionButton
             size="lg"
             bg="none"
-            whileHover={{ scale: 1.2 }}
+            whileHover={{ scale: 1.1 }}
             onClick={onDeleteTodo}
           >
             <DeleteIcon />
