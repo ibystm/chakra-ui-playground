@@ -58,6 +58,7 @@ const TodoInputArea: React.FC = () => {
     >
       <Box width="75%">
         <Input
+          aria-label="todo-input-area"
           variant="flushed"
           placeholder="New Todo"
           size="lg"
