@@ -11,12 +11,20 @@ const setUp = () => {
   };
 };
 
-it("check render element firtst", () => {
-  const { input, debug, getByDisplayValue } = setUp();
-  fireEvent.change(input, { target: { value: "32" } });
-  getByDisplayValue("32");
+describe("TodoInputArea Comopnent Test !!!", () => {
+  it("check input value", () => {
+    const { input, debug, getByDisplayValue } = setUp();
+    fireEvent.change(input, { target: { value: "32" } });
+    getByDisplayValue("32");
 
-  fireEvent.change(input, { target: { value: "changed" } });
-  getByDisplayValue("changed");
-  debug();
+    fireEvent.change(input, { target: { value: "changed" } });
+    getByDisplayValue("changed");
+    debug();
+  });
+
+  it("check placeholder renders correctly", () => {
+    const { baseElement } = setUp();
+    // ↓ debugと同じ
+    // console.log(prettyDOM(baseElement));
+  });
 });
