@@ -19,12 +19,13 @@ describe("TodoInputArea Comopnent Test !!!", () => {
 
     fireEvent.change(input, { target: { value: "changed" } });
     getByDisplayValue("changed");
-    debug();
   });
 
-  it("check placeholder renders correctly", () => {
-    const { baseElement } = setUp();
+  it("check placeholder Text renders correctly", () => {
+    const { getByRole, getByPlaceholderText } = setUp();
     // ↓ debugと同じ
     // console.log(prettyDOM(baseElement));
+    expect(getByPlaceholderText("New Todo")).toBeInTheDocument();
+    expect(getByRole("textbox")).toBeInTheDocument();
   });
 });
