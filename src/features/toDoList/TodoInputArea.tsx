@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { MotionBox } from "../../components/Motions";
 import { useKeyboardEvents } from "../../utils/hooks/useKeyboardEvents";
 import { useInputError } from "./hooks/useInputError";
-import { addTodo } from "./toDoListSlice";
+import { addTodo, deleteAll } from "./toDoListSlice";
 
 const variants = {
   hidden: {
@@ -45,8 +45,8 @@ const TodoInputArea: React.FC = () => {
   );
 
   const onClickReset = useCallback(() => {
-    alert("こらー！");
-  }, []);
+    dispatch(deleteAll());
+  }, [dispatch]);
 
   return (
     <MotionBox

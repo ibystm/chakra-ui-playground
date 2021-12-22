@@ -37,6 +37,9 @@ export const todoListSlice = createSlice({
       const { key } = action.payload;
       return state.filter((e) => e.key !== key);
     },
+    deleteAll: (state) => {
+      state.length = 0;
+    },
     changeStatus: (
       state,
       action: PayloadAction<Pick<ToDoListState, "key">>
@@ -50,7 +53,7 @@ export const todoListSlice = createSlice({
   },
 });
 
-export const { addTodo, changeStatus, updateTodo, deleteTodo } =
+export const { addTodo, changeStatus, updateTodo, deleteTodo, deleteAll } =
   todoListSlice.actions;
 export const selectTodoList = (state: RootState): ToDoListState[] =>
   state.todoList;
