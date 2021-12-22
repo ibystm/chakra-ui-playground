@@ -19,7 +19,9 @@ import {
   MotionButton,
   MotionCheckbox,
 } from "../../components/Motions";
+import { useKeyboardEvents } from "../../utils/hooks/useKeyboardEvents";
 import { changeStatus, deleteTodo, updateTodo } from "./toDoListSlice";
+
 type ITodoItem = {
   storeKey: string;
   todo: string;
@@ -47,12 +49,17 @@ const variants = {
 export const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
   const dispatch = useAppDispatch();
   const controls = useAnimation();
+  const { handlePressEnter } = useKeyboardEvents();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [editTodo, setEditTodo] = useState<string>(todo);
   const closeModal = () => setModalOpen(false);
+  const openModal = useCallback(() => {
+    setEditTodo(todo);
+    setModalOpen(true);
+  }, [todo]);
   const onCheck = useCallback(() => {
     dispatch(changeStatus({ key: storeKey }));
-  }, []);
+  }, [dispatch, storeKey]);
   const onChangeTodo = useCallback((e: React.FormEvent<HTMLInputElement>) => {
     setEditTodo(e.currentTarget.value);
   }, []);
@@ -60,10 +67,16 @@ export const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
     dispatch(updateTodo({ key: storeKey, todo: editTodo }));
     setEditTodo("");
     closeModal();
-  }, [editTodo]);
+  }, [dispatch, editTodo, storeKey]);
+  const onKeyDownEnter = useCallback(
+    (e: React.KeyboardEvent) => {
+      handlePressEnter(e, onSaveEditTodo);
+    },
+    [handlePressEnter, onSaveEditTodo]
+  );
   const onDeleteTodo = useCallback(() => {
     dispatch(deleteTodo({ key: storeKey }));
-  }, []);
+  }, [dispatch, storeKey]);
 
   useEffect(() => {
     if (isDone) {
@@ -72,7 +85,7 @@ export const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
     if (!isDone) {
       controls.start("animate");
     }
-  }, [isDone]);
+  }, [controls, isDone]);
   return (
     <>
       <MotionBox
@@ -105,9 +118,7 @@ export const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
             size="lg"
             bg="none"
             whileHover={{ scale: 1.1 }}
-            onClick={() => {
-              setModalOpen(true);
-            }}
+            onClick={openModal}
           >
             <EditIcon />
           </MotionButton>
@@ -131,7 +142,11 @@ export const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
           <ModalHeader>Edit your Todo</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <Input value={editTodo} onChange={onChangeTodo} />
+            <Input
+              value={editTodo}
+              onChange={onChangeTodo}
+              onKeyDown={onKeyDownEnter}
+            />
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onSaveEditTodo}>
