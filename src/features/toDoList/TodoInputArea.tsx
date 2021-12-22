@@ -3,6 +3,7 @@ import { Box, Button, Input, Text } from "@chakra-ui/react";
 import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { MotionBox } from "../../components/Motions";
+import { useKeyboardEvents } from "../../utils/hooks/useKeyboardEvents";
 import { useInputError } from "./hooks/useInputError";
 import { addTodo } from "./toDoListSlice";
 
@@ -21,19 +22,19 @@ const variants = {
 const TodoInputArea: React.FC = () => {
   const [input, setInput] = useState<string>("");
   const { errorObject, handleError } = useInputError();
+  const { handlePressEnter } = useKeyboardEvents();
 
   const dispatch = useDispatch();
-  const onKeyDown = useCallback(
-    (e: React.KeyboardEvent): void => {
-      if (!input.length) return;
-
-      // deprecated
-      if (e.keyCode === 13) {
-        dispatch(addTodo(input));
-        setInput("");
-      }
+  const createTodo = useCallback(() => {
+    if (!input.length) return;
+    dispatch(addTodo(input));
+    setInput("");
+  }, [dispatch, input]);
+  const onPressEnter = useCallback(
+    (e: React.KeyboardEvent) => {
+      handlePressEnter(e, createTodo);
     },
-    [dispatch, input]
+    [createTodo, handlePressEnter]
   );
   const handleChange = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => {
@@ -63,7 +64,7 @@ const TodoInputArea: React.FC = () => {
           placeholder="New Todo"
           size="lg"
           focusBorderColor="purple.400"
-          onKeyDown={onKeyDown}
+          onKeyDown={onPressEnter}
           value={input}
           onChange={handleChange}
           isInvalid={errorObject.error}

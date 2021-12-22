@@ -112,7 +112,6 @@ export const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
             {todo}
           </MotionCheckbox>
         </Box>
-
         <Box w="30%" display="flex">
           <MotionButton
             size="lg"
