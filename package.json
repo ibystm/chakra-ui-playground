@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "@types/testing-library__dom": "^7.5.0",
-    "eslint-plugin-jest": "^24.1.5"
+    "eslint-plugin-jest": "^24.1.5",
+    "eslint-plugin-react-hooks": "^4.3.0"
   }
 }

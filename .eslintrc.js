@@ -18,10 +18,11 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: "module",
   },
-  plugins: ["react", "@typescript-eslint", "jest"],
+  plugins: ["react", "react-hooks", "@typescript-eslint", "jest"],
   rules: {
     "no-control-regex": 0,
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off", // Reactのimportがなくてもjsxが使用できるようになる。
+    "react-hooks/exhaustive-deps": "warn", // hooksのdeps漏れをwarnに
   },
 };
