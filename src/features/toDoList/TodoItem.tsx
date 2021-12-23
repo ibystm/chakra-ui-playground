@@ -10,6 +10,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Text,
 } from "@chakra-ui/react";
 import { useAnimation } from "framer-motion";
 import React, { useCallback, useEffect, useState } from "react";
@@ -20,6 +21,7 @@ import {
   MotionCheckbox,
 } from "../../components/Motions";
 import { useKeyboardEvents } from "../../utils/hooks/useKeyboardEvents";
+import { useInputError } from "./hooks/useInputError";
 import { changeStatus, deleteTodo, updateTodo } from "./toDoListSlice";
 
 type ITodoItem = {
@@ -49,31 +51,35 @@ const variants = {
 export const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
   const dispatch = useAppDispatch();
   const controls = useAnimation();
+  const { handleError, errorObject } = useInputError();
   const { handlePressEnter } = useKeyboardEvents();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [editTodo, setEditTodo] = useState<string>(todo);
-  const closeModal = () => setModalOpen(false);
-  const openModal = useCallback(() => {
+  const closeModal = () => {
+    setModalOpen(false);
+    handleError(todo);
+  };
+  const openModal = () => {
     setEditTodo(todo);
     setModalOpen(true);
-  }, [todo]);
+  };
   const onCheck = useCallback(() => {
     dispatch(changeStatus({ key: storeKey }));
   }, [dispatch, storeKey]);
-  const onChangeTodo = useCallback((e: React.FormEvent<HTMLInputElement>) => {
+  const onChangeTodo = (e: React.FormEvent<HTMLInputElement>) => {
     setEditTodo(e.currentTarget.value);
-  }, []);
-  const onSaveEditTodo = useCallback(() => {
+    handleError(e.currentTarget.value);
+  };
+  const onSaveEditTodo = () => {
     dispatch(updateTodo({ key: storeKey, todo: editTodo }));
     setEditTodo("");
     closeModal();
-  }, [dispatch, editTodo, storeKey]);
-  const onKeyDownEnter = useCallback(
-    (e: React.KeyboardEvent) => {
-      handlePressEnter(e, onSaveEditTodo);
-    },
-    [handlePressEnter, onSaveEditTodo]
-  );
+  };
+  const onKeyDownEnter = (e: React.KeyboardEvent) => {
+    if (errorObject.error) return;
+    handlePressEnter(e, onSaveEditTodo);
+  };
+
   const onDeleteTodo = useCallback(() => {
     dispatch(deleteTodo({ key: storeKey }));
   }, [dispatch, storeKey]);
@@ -145,10 +151,22 @@ export const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
               value={editTodo}
               onChange={onChangeTodo}
               onKeyDown={onKeyDownEnter}
+              isInvalid={errorObject.error}
+              errorBorderColor="crimson"
             />
+            {errorObject.error && (
+              <Text mt={2} color="crimson">
+                {errorObject.message}
+              </Text>
+            )}
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onSaveEditTodo}>
+            <Button
+              colorScheme="blue"
+              mr={3}
+              onClick={onSaveEditTodo}
+              disabled={errorObject.error}
+            >
               Save
             </Button>
             <Button onClick={closeModal}>Cancel</Button>
