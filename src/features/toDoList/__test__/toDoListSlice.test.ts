@@ -72,6 +72,19 @@ describe("toDoListSlice", () => {
       todoListReducer(singlePreviousState, deleteTodo({ key: "key1" }))
     );
     expectations.toEqual([]);
+
+    const state = [
+      ...singlePreviousState,
+      {
+        key: "key2",
+        todo: "new todo2",
+        isDone: false,
+      },
+    ];
+
+    expect(todoListReducer(state, deleteTodo({ key: "key2" }))).toEqual(
+      singlePreviousState
+    );
   });
 
   test("Delete all todo", () => {

@@ -32,7 +32,7 @@ describe("TodoInputArea Comopnent Test !!!", () => {
   it("Check errorMessage is shown when Input value is full width", () => {
     const { input, getByText } = setUp();
     fireEvent.change(input, { target: { value: "日本語を入力してみた" } });
-    expect(getByText("Not use full width string")).toBeInTheDocument();
+    expect(getByText("半角文字でご入力ください")).toBeInTheDocument();
   });
 
   it("Check error message shown when input is empty", () => {
