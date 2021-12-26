@@ -1,11 +1,18 @@
-import todoListReducer, { addTodo, ToDoListState } from "../toDoListSlice";
+import todoListReducer, {
+  addTodo,
+  changeStatus,
+  deleteAll,
+  deleteTodo,
+  ToDoListState,
+  updateTodo,
+} from "../toDoListSlice";
 
 describe("toDoListSlice", () => {
-  test("initial", () => {
+  test("Initial state", () => {
     expect(todoListReducer(undefined, { type: "NO_TYPE" })).toEqual([]);
   });
 
-  test("Add Todo test", () => {
+  test("Add Todo", () => {
     const previousState: ToDoListState[] = [];
     expect(todoListReducer(previousState, addTodo("new todo"))).toEqual([
       {
@@ -14,5 +21,91 @@ describe("toDoListSlice", () => {
         isDone: false,
       },
     ]);
+  });
+
+  test("Change state to Done", () => {
+    const previousState: ToDoListState[] = [
+      {
+        key: "key1",
+        todo: "previous todo",
+        isDone: false,
+      },
+    ];
+    expect(
+      todoListReducer(previousState, changeStatus({ key: "key1" }))
+    ).toEqual([
+      {
+        key: "key1",
+        todo: "previous todo",
+        isDone: true,
+      },
+    ]);
+  });
+
+  test("Update todo", () => {
+    const previousState: ToDoListState[] = [
+      {
+        key: "key1",
+        todo: "previous todo",
+        isDone: false,
+      },
+    ];
+    const expectations = expect(
+      todoListReducer(
+        previousState,
+        updateTodo({ key: "key1", todo: "new todo" })
+      )
+    );
+
+    expectations.not.toEqual([
+      {
+        key: "key1",
+        todo: "previous todo",
+        isDone: false,
+      },
+    ]);
+    expectations.toEqual([
+      {
+        key: "key1",
+        todo: "new todo",
+        isDone: false,
+      },
+    ]);
+  });
+
+  test("Delete todo", () => {
+    const previousState: ToDoListState[] = [
+      {
+        key: "key1",
+        todo: "previous todo",
+        isDone: false,
+      },
+    ];
+    const expectations = expect(
+      todoListReducer(previousState, deleteTodo({ key: "key1" }))
+    );
+    expectations.toEqual([]);
+  });
+
+  test("Delete all todo", () => {
+    const previousState: ToDoListState[] = [
+      {
+        key: "key1",
+        todo: "previous todo1",
+        isDone: false,
+      },
+      {
+        key: "key2",
+        todo: "previous todo2",
+        isDone: false,
+      },
+      {
+        key: "key2",
+        todo: "previous todo3",
+        isDone: false,
+      },
+    ];
+    const expectations = expect(todoListReducer(previousState, deleteAll()));
+    expectations.toEqual([]);
   });
 });
