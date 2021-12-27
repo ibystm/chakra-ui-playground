@@ -24,5 +24,12 @@ module.exports = {
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off", // Reactのimportがなくてもjsxが使用できるようになる。
     "react-hooks/exhaustive-deps": "warn", // hooksのdeps漏れをwarnに
+    "no-restricted-syntax": [
+      "error",
+      {
+        selector: "TSEnumDeclaration",
+        message: "Don't declare enums",
+      },
+    ],
   },
 };
