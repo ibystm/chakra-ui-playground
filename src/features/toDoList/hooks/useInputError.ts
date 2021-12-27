@@ -8,16 +8,16 @@ const InputErrorMessage = {
 export type InputErrorMessage =
   typeof InputErrorMessage[keyof typeof InputErrorMessage];
 
-type ErrorObject = {
+export type InputErrorObject = {
   error: boolean;
   message: InputErrorMessage;
 };
 export type UseInputErrorReturnType = {
-  errorObject: ErrorObject;
+  errorObject: InputErrorObject;
   handleError: (parm: string) => void;
 };
 
-const initialErrorInfo: ErrorObject = {
+const initialErrorInfo: InputErrorObject = {
   error: false,
   message: "エラーなし",
 };
