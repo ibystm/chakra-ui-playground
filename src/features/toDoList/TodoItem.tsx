@@ -99,6 +99,7 @@ export const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
         initial="initial"
         animate={controls}
         display="flex"
+        alignItems="center"
         justifyContent="space-between"
         w="100%"
       >

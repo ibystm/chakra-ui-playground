@@ -90,7 +90,7 @@ const TodoInputArea: React.FC = () => {
             onChange={handleChange}
             isInvalid={errorObject.error}
           />
-          {errorObject.message && (
+          {errorObject.error && (
             <Text color="crimson" mt={2}>
               {errorObject.message}
             </Text>
