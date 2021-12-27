@@ -1,11 +1,16 @@
 import { Stack, Tab, TabList, Tabs, Text } from "@chakra-ui/react";
 import React from "react";
-import { useSelector } from "../../app/hooks";
+import { useTodoItemFilter } from "./hooks/useTodoItemFilter";
 import { TodoItem } from "./TodoItem";
-import { selectTodoList } from "./toDoListSlice";
 
 const ToDoList: React.FC = () => {
-  const todoList = useSelector((state) => selectTodoList(state));
+  // const todoList = useSelector((state) => selectTodoList(state));
+  const [tabIndex, setTabIndex] = React.useState<number>(0);
+  const { filteredTodo } = useTodoItemFilter(tabIndex);
+  const onChangeTab = (idx: number) => {
+    setTabIndex(idx);
+  };
+
   return (
     <Stack
       spacing={2}
@@ -15,6 +20,8 @@ const ToDoList: React.FC = () => {
       w="300px"
     >
       <Tabs
+        tabIndex={tabIndex}
+        onChange={onChangeTab}
         width="100%"
         variant="soft-rounded"
         colorScheme="purple"
@@ -25,8 +32,8 @@ const ToDoList: React.FC = () => {
           <Tab>ToDo</Tab>
           <Tab>Done</Tab>
         </TabList>
-        {todoList.length ? (
-          todoList.map((t) => {
+        {filteredTodo.length ? (
+          filteredTodo.map((t) => {
             return (
               <TodoItem
                 key={t.key}
