@@ -1,32 +1,40 @@
 import { useCallback, useState } from "react";
 
+const InputErrorMessage = {
+  DoNotUseFullWidth: "半角文字でご入力ください",
+  InputMoreThanOneString: "一文字以上入力してください",
+  None: "エラーなし",
+} as const;
+export type InputErrorMessage =
+  typeof InputErrorMessage[keyof typeof InputErrorMessage];
+
 type ErrorObject = {
   error: boolean;
-  message: string;
+  message: InputErrorMessage;
 };
-type UseInputErrorReturn = {
+export type UseInputErrorReturnType = {
   errorObject: ErrorObject;
   handleError: (parm: string) => void;
 };
 
-const initialErrorInfo = {
+const initialErrorInfo: ErrorObject = {
   error: false,
-  message: "",
+  message: "エラーなし",
 };
-export const useInputError = (): UseInputErrorReturn => {
+export const useInputError = (): UseInputErrorReturnType => {
   const [errorObject, setErrorObject] = useState(initialErrorInfo);
   const handleError = useCallback((input: string) => {
     if (input.length === 0) {
       setErrorObject({
         error: true,
-        message: "一文字以上入力してください",
+        message: InputErrorMessage.InputMoreThanOneString,
       });
       return;
     }
     if (input.match(/^[^\x01-\x7E\xA1-\xDF]+$/)) {
       setErrorObject({
         error: true,
-        message: "Not use full width string",
+        message: "半角文字でご入力ください",
       });
       return;
     }
