@@ -109,6 +109,7 @@ export const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
           width="200px"
           overflow="hidden"
           display="inline-block"
+          textAlign="left"
         >
           <MotionCheckbox
             size="lg"
