@@ -47,9 +47,10 @@ const TodoInputArea: React.FC = () => {
   }, [dispatch, input]);
   const onPressEnter = useCallback(
     (e: React.KeyboardEvent) => {
+      if (errorObject.error) return;
       handlePressEnter(e, createTodo);
     },
-    [createTodo, handlePressEnter]
+    [createTodo, errorObject.error, handlePressEnter]
   );
   const handleChange = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => {
