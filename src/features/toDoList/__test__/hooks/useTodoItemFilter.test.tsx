@@ -1,111 +1,42 @@
 import { renderHook } from "@testing-library/react-hooks";
-import { Provider } from "react-redux";
-import configureStore from "redux-mock-store";
-import { RootState } from "../../../../app/store";
+import * as redux from "react-redux";
+import * as utils from "../../../../app/hooks";
 import { useTodoItemFilter } from "../../hooks/useTodoItemFilter";
-import { ToDoListState } from "../../toDoListSlice";
 
 describe("useToToItemFilter", () => {
-  const setUp = () => {
-    const mockStore = configureStore([]);
-    const store = mockStore({
-      todoList: [
-        {
-          key: "key1",
-          todo: "key1",
-          isDone: false,
-        },
-        {
-          key: "key2",
-          todo: "key2",
-          isDone: true,
-        },
-        {
-          key: "key3",
-          todo: "key3",
-          isDone: false,
-        },
-      ],
-    } as Partial<RootState>);
+  let spyOnUseSelector;
+  let spyOnUseDispatch;
+  let mockDispatch;
 
-    const wrapper: React.FC = ({ children }) => (
-      <Provider store={store}>{children}</Provider>
-    );
-    return { wrapper };
-  };
+  beforeEach(() => {
+    // Mock useSelector hook
+    spyOnUseSelector = jest.spyOn(utils, "useSelector");
+    spyOnUseSelector.mockReturnValue([]);
+
+    // Mock useDispatch hook
+    spyOnUseDispatch = jest.spyOn(redux, "useDispatch");
+    // Mock dispatch function returned from useDispatch
+    mockDispatch = jest.fn();
+    spyOnUseDispatch.mockReturnValue(mockDispatch);
+  });
 
   it("Empty todo test", () => {
-    const state: ToDoListState[] = [
-      {
-        key: "key1",
-        todo: "key1",
-        isDone: false,
-      },
-      {
-        key: "key2",
-        todo: "key2",
-        isDone: true,
-      },
-      {
-        key: "key3",
-        todo: "key3",
-        isDone: false,
-      },
-    ];
-
-    const { wrapper } = setUp();
-    const { result } = renderHook(() => useTodoItemFilter(0), { wrapper });
-    expect(result.current.filteredTodo).toEqual(state);
+    const { result } = renderHook(() => useTodoItemFilter(0));
+    expect(result.current.filteredTodo).toEqual([]);
   });
 
   it("No filter test", () => {
-    const { wrapper } = setUp();
-    const { result } = renderHook(() => useTodoItemFilter(0), { wrapper });
-    expect(result.current.filteredTodo).toEqual([
-      {
-        key: "key1",
-        todo: "key1",
-        isDone: false,
-      },
-      {
-        key: "key2",
-        todo: "key2",
-        isDone: true,
-      },
-      {
-        key: "key3",
-        todo: "key3",
-        isDone: false,
-      },
-    ]);
+    const { result } = renderHook(() => useTodoItemFilter(0));
+    expect(result.current.filteredTodo).toEqual([]);
   });
 
   it("Only Todo status test", () => {
-    const { wrapper } = setUp();
-    const { result } = renderHook(() => useTodoItemFilter(1), { wrapper });
-    expect(result.current.filteredTodo).toEqual([
-      {
-        key: "key1",
-        todo: "key1",
-        isDone: false,
-      },
-      {
-        key: "key3",
-        todo: "key3",
-        isDone: false,
-      },
-    ]);
+    const { result } = renderHook(() => useTodoItemFilter(1));
+    expect(result.current.filteredTodo).toEqual([]);
   });
 
   it("Only isDone status test", () => {
-    const { wrapper } = setUp();
-    const { result } = renderHook(() => useTodoItemFilter(2), { wrapper });
-    expect(result.current.filteredTodo).toEqual([
-      {
-        key: "key2",
-        todo: "key2",
-        isDone: true,
-      },
-    ]);
+    const { result } = renderHook(() => useTodoItemFilter(2));
+    expect(result.current.filteredTodo).toEqual([]);
   });
 });
