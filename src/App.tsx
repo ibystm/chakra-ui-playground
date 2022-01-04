@@ -1,10 +1,10 @@
-import { Heading, VStack } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import React from "react";
 import { useSelector } from "./app/hooks";
+import { Header } from "./components/header/Header";
 import { selectLoadingStatus } from "./features/counter/counterSlice";
 import { Loading } from "./features/loading/Loading";
-import TodoInputArea from "./features/toDoList/TodoInputArea";
-import ToDoList from "./features/toDoList/ToDoList";
+import { TodoContainer } from "./features/toDoList/TodoContainer";
 
 const App: React.FC = () => {
   const loadingState = useSelector(selectLoadingStatus);
@@ -12,14 +12,12 @@ const App: React.FC = () => {
   return (
     <VStack
       spacing={10}
-      mt="120px"
-      ml="120px"
+      mt="8px"
       position="relative"
       bg={loading ? "#E7F3FA" : undefined}
     >
-      <Heading>Todo App</Heading>
-      <TodoInputArea />
-      <ToDoList />
+      <Header />
+      <TodoContainer />
       {loading && <Loading />}
     </VStack>
   );
