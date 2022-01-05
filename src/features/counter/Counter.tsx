@@ -9,7 +9,7 @@ import {
   substractAsync,
 } from "./counterSlice";
 
-export function Counter() {
+export function Counter(): JSX.Element {
   const count = useSelector((state) => counterValueSelecter(state));
   const dispatch = useAppDispatch();
   const [incrementAmount, setIncrementAmount] = useState("2");
