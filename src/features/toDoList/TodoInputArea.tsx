@@ -12,7 +12,8 @@ import {
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
-import React, { useCallback, useState } from "react";
+import { useFormik } from "formik";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { MotionBox } from "../../components/Motions";
 import { useKeyboardEvents } from "../../utils/hooks/useKeyboardEvents";
@@ -32,7 +33,6 @@ const variants = {
 };
 
 const TodoInputArea: React.FC = () => {
-  const [input, setInput] = useState<string>("");
   const { errorObject, handleError } = useInputError();
   const { handlePressEnter } = useKeyboardEvents();
   const [resetModalOpen, setResetModalOpen] = useState<boolean>(false);
@@ -40,25 +40,21 @@ const TodoInputArea: React.FC = () => {
   const closeModal = () => setResetModalOpen(false);
 
   const dispatch = useDispatch();
-  const createTodo = useCallback(() => {
+  const createTodo = () => {
+    const input = formik.values.input;
     if (!input.length) return;
     dispatch(addTodo(input));
-    setInput("");
-  }, [dispatch, input]);
-  const onPressEnter = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (errorObject.error) return;
-      handlePressEnter(e, createTodo);
-    },
-    [createTodo, errorObject.error, handlePressEnter]
-  );
-  const handleChange = useCallback(
-    (e: React.FormEvent<HTMLInputElement>) => {
-      setInput(e.currentTarget.value);
-      handleError(e.currentTarget.value);
-    },
-    [handleError]
-  );
+    formik.resetForm();
+  };
+  const onPressEnter = (e: React.KeyboardEvent) => {
+    if (errorObject.error) return;
+    handlePressEnter(e, createTodo);
+  };
+
+  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+    formik.handleChange(e);
+    handleError(e.currentTarget.value);
+  };
 
   const onClickReset = () => {
     dispatch(deleteAll());
@@ -68,6 +64,14 @@ const TodoInputArea: React.FC = () => {
     onClickReset();
     closeModal();
   };
+  const formik = useFormik({
+    initialValues: {
+      input: "",
+    },
+    onSubmit: () => {
+      console.log("submit!");
+    },
+  });
 
   return (
     <>
@@ -81,13 +85,14 @@ const TodoInputArea: React.FC = () => {
       >
         <Box width="75%">
           <Input
+            name="input"
             aria-label="todo-input-area"
             variant="flushed"
             placeholder="New Todo"
             size="lg"
             focusBorderColor="purple.400"
             onKeyDown={onPressEnter}
-            value={input}
+            value={formik.values.input}
             onChange={handleChange}
             isInvalid={errorObject.error}
           />

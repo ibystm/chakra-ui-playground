@@ -1,5 +1,5 @@
 import { CheckCircleIcon } from "@chakra-ui/icons";
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Button, Heading } from "@chakra-ui/react";
 import React from "react";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -14,10 +14,10 @@ export const Header: React.FC<P> = () => {
       borderColor="#E2E8F0"
       display="flex"
     >
-      <Box display="flex">
-        <CheckCircleIcon ml="100px" w="40px" h="40px" mr="16px" />
+      <Button display="flex" ml="100px" bg="#fff">
+        <CheckCircleIcon w="40px" h="40px" mr="16px" />
         <Heading>Todo List</Heading>
-      </Box>
+      </Button>
     </Box>
   );
 };

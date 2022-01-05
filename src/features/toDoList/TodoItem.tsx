@@ -13,7 +13,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useAnimation } from "framer-motion";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import {
   MotionBox,
@@ -63,9 +63,9 @@ export const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
     setEditTodo(todo);
     setModalOpen(true);
   };
-  const onCheck = useCallback(() => {
+  const onCheck = () => {
     dispatch(changeStatus({ key: storeKey }));
-  }, [dispatch, storeKey]);
+  };
   const onChangeTodo = (e: React.FormEvent<HTMLInputElement>) => {
     setEditTodo(e.currentTarget.value);
     handleError(e.currentTarget.value);
@@ -80,9 +80,9 @@ export const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
     handlePressEnter(e, onSaveEditTodo);
   };
 
-  const onDeleteTodo = useCallback(() => {
+  const onDeleteTodo = () => {
     dispatch(deleteTodo({ key: storeKey }));
-  }, [dispatch, storeKey]);
+  };
 
   useEffect(() => {
     if (isDone) {
@@ -107,6 +107,7 @@ export const TodoItem: React.FC<ITodoItem> = ({ storeKey, todo, isDone }) => {
           whiteSpace="nowrap"
           textOverflow="ellipsis"
           width="200px"
+          marginLeft="10px"
           overflow="hidden"
           display="inline-block"
           textAlign="left"
