@@ -15,6 +15,7 @@ import {
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import * as Yup from "yup";
 import { MotionBox } from "../../components/Motions";
 import { useKeyboardEvents } from "../../utils/hooks/useKeyboardEvents";
 import { useInputError } from "./hooks/useInputError";
@@ -32,9 +33,25 @@ const variants = {
   },
 };
 
+const inputValidationScheme = {
+  initialValues: {
+    input: "",
+  },
+  validationSchema: Yup.object({
+    input: Yup.string()
+      .matches(/^[a-zA-Z0-9]+$/, { message: "半角英数字をご入力ください" })
+      .max(15, "15文字以内にしてください")
+      .required("必須項目です"),
+  }),
+  onSubmit: () => {
+    console.log("submit!");
+  },
+};
+
 const TodoInputArea: React.FC = () => {
   const { errorObject, handleError } = useInputError();
   const { handlePressEnter } = useKeyboardEvents();
+  const formik = useFormik(inputValidationScheme);
   const [resetModalOpen, setResetModalOpen] = useState<boolean>(false);
   const opneModal = () => setResetModalOpen(true);
   const closeModal = () => setResetModalOpen(false);
@@ -64,14 +81,6 @@ const TodoInputArea: React.FC = () => {
     onClickReset();
     closeModal();
   };
-  const formik = useFormik({
-    initialValues: {
-      input: "",
-    },
-    onSubmit: () => {
-      console.log("submit!");
-    },
-  });
 
   return (
     <>
@@ -96,9 +105,9 @@ const TodoInputArea: React.FC = () => {
             onChange={handleChange}
             isInvalid={errorObject.error}
           />
-          {errorObject.error && errorObject.message && (
+          {formik.errors.input && (
             <Text color="crimson" mt={2}>
-              {errorObject.message}
+              {formik.errors.input}
             </Text>
           )}
         </Box>
