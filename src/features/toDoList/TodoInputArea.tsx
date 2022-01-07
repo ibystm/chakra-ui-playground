@@ -18,7 +18,6 @@ import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import { MotionBox } from "../../components/Motions";
 import { useKeyboardEvents } from "../../utils/hooks/useKeyboardEvents";
-import { useInputError } from "./hooks/useInputError";
 import { addTodo, deleteAll } from "./toDoListSlice";
 
 const variants = {
@@ -49,13 +48,11 @@ const inputValidationScheme = {
 };
 
 const TodoInputArea: React.FC = () => {
-  const { errorObject, handleError } = useInputError();
   const { handlePressEnter } = useKeyboardEvents();
   const formik = useFormik(inputValidationScheme);
   const [resetModalOpen, setResetModalOpen] = useState<boolean>(false);
   const opneModal = () => setResetModalOpen(true);
   const closeModal = () => setResetModalOpen(false);
-
   const dispatch = useDispatch();
   const createTodo = () => {
     const input = formik.values.input;
@@ -64,13 +61,12 @@ const TodoInputArea: React.FC = () => {
     formik.resetForm();
   };
   const onPressEnter = (e: React.KeyboardEvent) => {
-    if (errorObject.error) return;
+    if (!formik.isValid) return;
     handlePressEnter(e, createTodo);
   };
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     formik.handleChange(e);
-    handleError(e.currentTarget.value);
   };
 
   const onClickReset = () => {
@@ -103,7 +99,7 @@ const TodoInputArea: React.FC = () => {
             onKeyDown={onPressEnter}
             value={formik.values.input}
             onChange={handleChange}
-            isInvalid={errorObject.error}
+            isInvalid={!formik.isValid}
           />
           {formik.errors.input && (
             <Text color="crimson" mt={2}>
